@@ -1,0 +1,13 @@
+{% autoescape off %}
+
+Hola {{user.first_name}},
+
+{% if is_approved %}
+    ¡Felicitaciones! Nuestro equipo de administración aprobó su restaurante. --foodOnline
+{% else %}
+    ¡Lo sentimos! No cumples los requisitos para publicar tu menú de comida en nuestro mercado. Para obtener más detalles, comunícate con richar.quispe98391@gmail.com --foodOnline
+{% endif %}
+
+
+
+{% endautoescape %}
