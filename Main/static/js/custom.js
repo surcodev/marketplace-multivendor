@@ -6,7 +6,7 @@ autocomplete = new google.maps.places.Autocomplete(
     {
         types: ['geocode', 'establishment'],
         //default in this app is "IN" - add your country code
-        componentRestrictions: {'country': ['in']},
+        componentRestrictions: {'country': ['pe']},
     })
 // function to specify what should happen when the prediction is clicked
 autocomplete.addListener('place_changed', onPlaceChanged);
@@ -80,6 +80,10 @@ $(document).ready(function(){
         food_id = $(this).attr('data-id');
         url = $(this).attr('data-url');
         
+        // console.log(food_id);
+        // console.log(url);
+        
+        
        
         $.ajax({
             type: 'GET',
@@ -135,6 +139,8 @@ $(document).ready(function(){
                     })
                 }else if(response.status == 'Failed'){
                     swal(response.message, '', 'error')
+                    console.log(response.message);
+                    
                 }else{
                     $('#cart_counter').html(response.cart_counter['cart_count']);
                     $('#qty-'+food_id).html(response.qty);

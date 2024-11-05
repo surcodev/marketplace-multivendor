@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'cuentas',
     'proveedor',
     'menu',
+    'mercado',
 ]
 
 MIDDLEWARE = [
@@ -70,6 +71,7 @@ TEMPLATES = [
                 # VENDOR CONTEXT PROCESSOR
                 'cuentas.context_processors.get_vendor',
                 'cuentas.context_processors.get_google_api',
+                'mercado.context_processors.get_cart_counter',
             ],
         },
     },

@@ -1,13 +1,13 @@
-from django.http import HttpResponse# , JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from cuentas.models import UserProfile
-# from .context_processors import get_cart_counter, get_cart_amounts
+from .context_processors import get_cart_counter, get_cart_amounts
 from menu.models import Category, FoodItem
 
 from proveedor.models import Vendor#, OpeningHour
 from django.db.models import Prefetch
-# from .models import Cart
+from .models import Cart
 from django.contrib.auth.decorators import login_required
 # from django.db.models import Q
 
@@ -43,18 +43,18 @@ def vendor_detail(request, vendor_slug):
     # opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day', 'from_hour')
     
     # Check current day's opening hours.
-    today_date = date.today()
-    today = today_date.isoweekday()
+    #today_date = date.today()
+    #today = today_date.isoweekday()
     
     # current_opening_hours = OpeningHour.objects.filter(vendor=vendor, day=today)
-    # if request.user.is_authenticated:
-    #     cart_items = Cart.objects.filter(user=request.user)
-    # else:
-    #     cart_items = None
+    if request.user.is_authenticated:
+        cart_items = Cart.objects.filter(user=request.user)
+    else:
+        cart_items = None
     context = {
         'vendor': vendor,
         'categories': categories,
-        # 'cart_items': cart_items,
+        'cart_items': cart_items,
         # 'opening_hours': opening_hours,
         # 'current_opening_hours': current_opening_hours,
     }
@@ -67,28 +67,33 @@ def add_to_cart(request, food_id):
             # Check if the food item exists
             try:
                 fooditem = FoodItem.objects.get(id=food_id)
+                print("Food item encontrado:", fooditem)
                 # Check if the user has already added that food to the cart
                 try:
                     chkCart = Cart.objects.get(user=request.user, fooditem=fooditem)
-                    # Increase the cart quantity
+                    print("Item ya en el carrito:", chkCart)
+            #       # Increase the cart quantity
                     chkCart.quantity += 1
                     chkCart.save()
-                    return JsonResponse({'status': 'Success', 'message': 'Increased the cart quantity', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
-                except:
+                    #return JsonResponse({'status': 'Success', 'message': 'Aumentó la cantidad del carrito', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
+                    return JsonResponse({'status': 'Success', 'message': 'Aumentó la cantidad del carrito', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
+                except Cart.DoesNotExist:
                     chkCart = Cart.objects.create(user=request.user, fooditem=fooditem, quantity=1)
+                    #return JsonResponse({'status': 'Success', 'message': 'Aumentó la cantidad del carrito', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity})
                     return JsonResponse({'status': 'Success', 'message': 'Added the food to the cart', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
-            except:
-                return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
+            except FoodItem.DoesNotExist:
+                return JsonResponse({'status': 'Failed', 'message': '¡Esta comida no existe!'})
         else:
-            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
+            return JsonResponse({'status': 'Failed', 'message': '¡Solicitud no válida!'})
         
     else:
-        return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
+        return JsonResponse({'status': 'login_required', 'message': 'Por favor, inicia sesión para continuar'})
 
 
 def decrease_cart(request, food_id):
     if request.user.is_authenticated:
         if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+            pass
             # Check if the food item exists
             try:
                 fooditem = FoodItem.objects.get(id=food_id)
@@ -103,15 +108,15 @@ def decrease_cart(request, food_id):
                         chkCart.delete()
                         chkCart.quantity = 0
                     return JsonResponse({'status': 'Success', 'cart_counter': get_cart_counter(request), 'qty': chkCart.quantity, 'cart_amount': get_cart_amounts(request)})
-                except:
-                    return JsonResponse({'status': 'Failed', 'message': 'You do not have this item in your cart!'})
-            except:
-                return JsonResponse({'status': 'Failed', 'message': 'This food does not exist!'})
+                except Cart.DoesNotExist:
+                    return JsonResponse({'status': 'Failed', 'message': '¡No tienes este artículo en tu carrito!'})
+            except FoodItem.DoesNotExist:
+                return JsonResponse({'status': 'Failed', 'message': '¡Esta comida no existe!'})
         else:
-            return JsonResponse({'status': 'Failed', 'message': 'Invalid request!'})
+            return JsonResponse({'status': 'Failed', 'message': '¡Solicitud no válida!'})
         
     else:
-        return JsonResponse({'status': 'login_required', 'message': 'Please login to continue'})
+        return JsonResponse({'status': 'login_required', 'message': 'Por favor, inicia sesión para continuar'})
 
 
 @login_required(login_url = 'login')
