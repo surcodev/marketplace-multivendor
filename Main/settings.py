@@ -72,6 +72,7 @@ TEMPLATES = [
                 'cuentas.context_processors.get_vendor',
                 'cuentas.context_processors.get_google_api',
                 'mercado.context_processors.get_cart_counter',
+                'mercado.context_processors.get_cart_amounts',
             ],
         },
     },
