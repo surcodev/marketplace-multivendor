@@ -7,11 +7,11 @@ from django.db import IntegrityError
 from menu.forms import CategoryForm, FoodItemForm
 # from orders.models import Order, OrderedFood
 # import vendor
-from .forms import VendorForm#, OpeningHourForm
+from .forms import VendorForm, OpeningHourForm
 from cuentas.forms import UserProfileForm
 
 from cuentas.models import UserProfile
-from .models import Vendor#, OpeningHour
+from .models import Vendor, OpeningHour
 from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required, user_passes_test

@@ -5,7 +5,7 @@ from cuentas.models import UserProfile
 from .context_processors import get_cart_counter, get_cart_amounts
 from menu.models import Category, FoodItem
 
-from proveedor.models import Vendor#, OpeningHour
+from proveedor.models import Vendor, OpeningHour
 from django.db.models import Prefetch
 from .models import Cart
 from django.contrib.auth.decorators import login_required
@@ -40,13 +40,14 @@ def vendor_detail(request, vendor_slug):
         )
     )
 
-    # opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day', 'from_hour')
-    
+    opening_hours = OpeningHour.objects.filter(vendor=vendor).order_by('day', 'from_hour')
+
     # Check current day's opening hours.
-    #today_date = date.today()
-    #today = today_date.isoweekday()
+    today_date = date.today()
+    today = today_date.isoweekday()
     
-    # current_opening_hours = OpeningHour.objects.filter(vendor=vendor, day=today)
+    current_opening_hours = OpeningHour.objects.filter(vendor=vendor, day=today)
+
     if request.user.is_authenticated:
         cart_items = Cart.objects.filter(user=request.user)
     else:
@@ -55,8 +56,8 @@ def vendor_detail(request, vendor_slug):
         'vendor': vendor,
         'categories': categories,
         'cart_items': cart_items,
-        # 'opening_hours': opening_hours,
-        # 'current_opening_hours': current_opening_hours,
+        'opening_hours': opening_hours,
+        'current_opening_hours': current_opening_hours,
     }
     return render(request, 'mercado/vendor_detail.html', context)
 

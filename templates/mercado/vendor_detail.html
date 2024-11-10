@@ -46,12 +46,15 @@
               <ul>
                 <li>
                   <a href="#" class="reviews-sortby-active">
-                    <span>Today :</span>
+                    <span>Hoy :</span>
                     {% for i in current_opening_hours %}
-                    <span
-                      >{% if i.is_closed %}Closed{% else %}{{ i.from_hour }} -
-                      {{ i.to_hour }}{% endif %}</span
-                    >
+                      <span>
+                        {% if i.is_closed %}
+                          Cerrado
+                        {% else %}
+                          {{ i.from_hour }} - {{ i.to_hour }}
+                        {% endif %}
+                      </span>
 
                     {% endfor %}
                     <i class="icon-chevron-small-down"></i>
@@ -62,8 +65,7 @@
                       <a href="#"
                         ><span class="opend-day">{{ hour }}</span>
                         <span class="opend-time"
-                          ><small>:</small>{% if hour.is_closed %}Closed{% else
-                          %}{{ hour.from_hour }} - {{ hour.to_hour }}{% endif %}</span
+                          ><small>:</small>{% if hour.is_closed %}Cerrado{% else %}{{ hour.from_hour }} - {{ hour.to_hour }}{% endif %}</span
                         ></a
                       >
                     </li>
