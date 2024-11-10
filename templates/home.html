@@ -137,8 +137,7 @@
               <li class="has-border">
                 <figure>
                   {% if vendor.user_profile.profile_picture %}
-                  {% comment %} <a href="{% url 'vendor_detail' vendor.vendor_slug %}" {% endcomment %}
-                  <a href="#"
+                  <a href="{% url 'vendor_detail' vendor.vendor_slug %}"
                     ><img
                       src="{{ vendor.user_profile.profile_picture.url }}"
                       height="125"
@@ -216,8 +215,7 @@
 										
 										<div class="post-title">
 											<h5>
-												{% comment %} <a href="{% url 'vendor_detail' vendor.vendor_slug %}">{{ vendor }}</a> {% endcomment %}
-                        <a href="{% url 'home' %}">{{ vendor }}</a>
+												<a href="{% url 'vendor_detail' vendor.vendor_slug %}">{{ vendor }}</a>
 											</h5>
 										</div>
 										{% if vendor.user_profile.city and vendor.user_profile.state and vendor.user_profile.pin_code %}
