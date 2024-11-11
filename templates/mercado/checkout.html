@@ -21,8 +21,8 @@
                                 
                                     <div id="menu-item-list-6272" class="menu-itam-list">
                                         
-                                        {% comment %} <form action="{% url 'place_order' %}" method="POST"> {% endcomment %}
-                                        <form action="{% url 'home' %}" method="POST">
+                                        <form action="{% url 'place_order' %}" method="POST">
+                                        {% comment %} <form action="{% url 'home' %}" method="POST"> {% endcomment %}
                                             {% csrf_token %}
 
                                             <div class="row">
@@ -160,13 +160,13 @@
                                                 &emsp;
                                                 <label>
                                                     <input type="radio" name="payment_method" value="RazorPay">
-                                                    <img src="{% static 'images/razorpay_logo.png' %}" alt="RazorPay" width="100">
+                                                    <img src="{% static 'images/mercadopago_logo.png' %}" alt="RazorPay" width="100">
                                                 </label>
                                             </div>
                                             <span class="text-danger" id="payment-method-error"></span>
                                             <!-- Select payment method -->
 
-                                            <button onclick="return payMethodConfirm();" type="submit" class="btn btn-danger w-100 p-2 mt-3">PLACE ORDER</button>
+                                            <button onclick="return payMethodConfirm();" type="submit" class="btn btn-danger w-100 p-2 mt-3">REALIZAR PEDIDO</button>
                                         </ul>
 
 
@@ -192,10 +192,10 @@
     function payMethodConfirm(){
         var payMethod = $("input[name='payment_method']:checked").val()
         if(!payMethod){
-            $('#payment-method-error').html("Select Payment Method!");
+            $('#payment-method-error').html("¡Selecciona el método de pago!");
             return false;
         }else{
-            var conf = confirm('You have selected '+payMethod+' as your preferred payment method.\nClick "OK" to continue.')
+            var conf = confirm('Usted ha seleccionado '+payMethod+' como su método de pago preferido.\nHaga clic en "Aceptar" para continuar.')
             if(conf == true){
                 return true;
             }else{
