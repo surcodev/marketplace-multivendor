@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'proveedor',
     'menu',
     'mercado',
+    'clientes',
 
     'django.contrib.gis',
 ]
@@ -77,6 +78,8 @@ TEMPLATES = [
                 'cuentas.context_processors.get_google_api',
                 'mercado.context_processors.get_cart_counter',
                 'mercado.context_processors.get_cart_amounts',
+                'cuentas.context_processors.get_user_profile',
+                # 'cuentas.context_processors.get_paypal_client_id',
             ],
         },
     },
