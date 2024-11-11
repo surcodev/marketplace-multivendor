@@ -34,7 +34,7 @@ urlpatterns = [
     path('search/', MarketplaceViews.search, name='search'),
 
     # CHECKOUT
-    #path('checkout/', MarketplaceViews.checkout, name='checkout'),
+    path('checkout/', MarketplaceViews.checkout, name='checkout'),
 
     # ORDERS
     #path('orders/', include('orders.urls')),

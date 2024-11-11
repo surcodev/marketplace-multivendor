@@ -16,7 +16,7 @@ from django.contrib.gis.measure import D # ``D`` is a shortcut for ``Distance``
 from django.contrib.gis.db.models.functions import Distance
 
 from datetime import date, datetime
-# from orders.forms import OrderForm
+from ordenes.forms import OrderForm
 
 
 # MAIN MARKETPLACE
@@ -211,4 +211,4 @@ def checkout(request):
         'form': form,
         'cart_items': cart_items,
     }
-    return render(request, 'marketplace/checkout.html', context)
+    return render(request, 'mercado/checkout.html', context)
