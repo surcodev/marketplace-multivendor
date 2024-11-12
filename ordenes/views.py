@@ -113,7 +113,7 @@ def place_order(request):
 
 @login_required(login_url='login')
 def payments(request):
-        # Check if the request is ajax or not
+        # Comprueba si la solicitud es ajax o no
     if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == 'POST':
         # STORE THE PAYMENT DETAILS IN THE PAYMENT MODEL
         order_number = request.POST.get('order_number')

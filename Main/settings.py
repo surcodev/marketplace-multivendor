@@ -80,7 +80,7 @@ TEMPLATES = [
                 'mercado.context_processors.get_cart_counter',
                 'mercado.context_processors.get_cart_amounts',
                 'cuentas.context_processors.get_user_profile',
-                # 'cuentas.context_processors.get_paypal_client_id',
+                'cuentas.context_processors.get_paypal_client_id',
             ],
         },
     },
@@ -177,7 +177,14 @@ EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'foodOnline Main <richar.quispe98391@gmail.com>'
 
+# API MAPS
 GOOGLE_API_KEY = config('GOOGLE_API_KEY')
+
+# PAYPAL
+PAYPAL_CLIENT_ID = config('PAYPAL_CLIENT_ID')
+
+# CSRF
+SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
 # GDAL
 os.environ['PATH'] = os.path.join(BASE_DIR, '.marketplace\Lib\site-packages\osgeo') + ';' + os.environ['PATH']
