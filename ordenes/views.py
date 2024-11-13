@@ -150,13 +150,15 @@ def payments(request):
             ordered_food.save()
 
         # SEND ORDER CONFIRMATION EMAIL TO THE CUSTOMER
-        mail_subject = 'Thank you for ordering with us.'
-        mail_template = 'orders/order_confirmation_email.html'
+        mail_subject = 'Gracias por ordenar con nosotros.'
+        mail_template = 'ordenes/order_confirmation_email.html'
 
         ordered_food = OrderedFood.objects.filter(order=order)
         customer_subtotal = 0
+
         for item in ordered_food:
             customer_subtotal += (item.price * item.quantity)
+
         tax_data = json.loads(order.tax_data)
         context = {
             'user': request.user,
@@ -171,8 +173,8 @@ def payments(request):
         
 
         # SEND ORDER RECEIVED EMAIL TO THE VENDOR
-        mail_subject = 'You have received a new order.'
-        mail_template = 'orders/new_order_received.html'
+        mail_subject = 'Has recibido un nuevo pedido.'
+        mail_template = 'ordenes/new_order_received.html'
         to_emails = []
         for i in cart_items:
             if i.fooditem.vendor.user.email not in to_emails:
@@ -193,7 +195,7 @@ def payments(request):
                 send_notification(mail_subject, mail_template, context)
 
         # CLEAR THE CART IF THE PAYMENT IS SUCCESS
-        # cart_items.delete() 
+        cart_items.delete() 
 
         # RETURN BACK TO AJAX WITH THE STATUS SUCCESS OR FAILURE
         response = {
@@ -224,7 +226,7 @@ def order_complete(request):
             'subtotal': subtotal,
             'tax_data': tax_data,
         }
-        return render(request, 'orders/order_complete.html', context)
+        return render(request, 'ordenes/order_complete.html', context)
     except:
         return redirect('home')
     
