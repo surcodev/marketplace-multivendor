@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from cuentas.forms import UserInfoForm, UserProfileForm
 from cuentas.models import UserProfile
 from django.contrib import messages
-# from orders.models import Order, OrderedFood
+from ordenes.models import Order, OrderedFood
 import simplejson as json
 
 
@@ -39,7 +39,7 @@ def my_orders(request):
     context = {
         'orders': orders,
     }
-    return render(request, 'customers/my_orders.html', context)
+    return render(request, 'clientes/my_orders.html', context)
 
 
 def order_detail(request, order_number):
@@ -56,7 +56,7 @@ def order_detail(request, order_number):
             'subtotal': subtotal,
             'tax_data': tax_data,
         }
-        return render(request, 'customers/order_detail.html', context)
+        return render(request, 'clientes/order_detail.html', context)
     except:
         return redirect('customer')
     
